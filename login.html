@@ -5,33 +5,49 @@
     <title>Title</title>
     <link rel="stylesheet" href="regpage.css">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans+Caption|PT+Sans&display=swap" rel="stylesheet">
-
 </head>
 <body>
 <div class="reg-container">
-<h1>Регистрация</h1>
-<form>
-    <div class="form-input">
-        <label for="name-input">Введите ваше имя</label>
-        <input type="text" id="name-input" name="login" placeholder="login" required/>
-    </div>
-    <div class="form-input">
-        <label for="password-input">Придумайте  пароль</label>
-        <input type="password" id="password-input" name="password" placeholder="пароль" required/>
-    </div>
-    <div class="form-input">
-        <label for="user-type-input">Выберите роль пользователя</label>
-        <select id="user-type-input">
-            <option>Admin</option>
-            <option>Registrator</option>
-            <option>Patient</option>
-        </select>
-    </div>
-    <input type="submit" value="Зарегистрироваться"/>
-</form>
+    <h1>Регистрация</h1>
+    <form>
+        <div class="form-input">
+            <label for="name-input">Введите ваше имя</label>
+            <input type="text" id="name-input" name="login" placeholder="login" required/>
+            <p id="name-error" class="error" style="color: red; display: none;">Введите имя корректной длины (не менее 5 символов)</p>
+        </div>
+        <div class="form-input">
+            <label for="password-input">Придумайте пароль</label>
+            <input type="password" id="password-input" name="password" placeholder="пароль" required/>
+        </div>
+        <div class="form-input">
+            <label for="user-type-input">Выберите роль пользователя</label>
+            <select id="user-type-input">
+                <option>Admin</option>
+                <option>Registrator</option>
+                <option>Patient</option>
+            </select>
+        </div>
+        <input type="submit" value="Зарегистрироваться"/>
+    </form>
 </div>
+
 <script type="text/javascript">
-    console.log("Hello!");
+    const nameInputText = document.querySelector("#name-input");
+    const nameError = document.querySelector("#name-error");
+
+    nameInputText.addEventListener("blur", () => {
+        const inputValue = nameInputText.value;
+        if (inputValue.length < 5) {
+            nameInputText.classList.add("input-error");
+            nameError.style.display = "block";
+        }
+    });
+
+    /* Удаление сообщения об ошибке */
+    nameInputText.addEventListener("focus", () => {
+        nameInputText.classList.remove("input-error");
+        nameError.style.display = "none";
+    });
 </script>
 </body>
 </html>
