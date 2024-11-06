@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="public/regpage.css">
+    <link rel="stylesheet" href="regpage.css">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans+Caption|PT+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="reg-container">
     <h1>Регистрация</h1>
-    <form>
+    <form id="registration-form">   <!--1-->
         <div class="form-input">
             <label for="name-input">Введите ваше имя</label>
             <input type="text" id="name-input" name="login" placeholder="login" required/>
@@ -21,10 +21,10 @@
         </div>
         <div class="form-input">
             <label for="user-type-input">Выберите роль пользователя</label>
-            <select id="user-type-input">
-                <option>Admin</option>
-                <option>Registrator</option>
-                <option>Patient</option>
+            <select id="user-type-input" name="userType">   <!--1-->
+                <option value="Admin">Admin</option>    <!--1-->
+                <option value="Register">Registrator</option>   <!--1-->
+                <option value="Patient">Patient</option>    <!--1-->
             </select>
         </div>
         <input type="submit" value="Зарегистрироваться"/>
@@ -34,6 +34,7 @@
 <script type="text/javascript">
     const nameInputText = document.querySelector("#name-input");
     const nameError = document.querySelector("#name-error");
+    const form = document.querySelector("#registration-form");  //1
 
     nameInputText.addEventListener("blur", () => {
         const inputValue = nameInputText.value;
@@ -42,11 +43,39 @@
             nameError.style.display = "block";
         }
     });
+
     /* Удаление сообщения об ошибке */
     nameInputText.addEventListener("focus", () => {
         nameInputText.classList.remove("input-error");
         nameError.style.display = "none";
     });
+
+
+    //это целый блок
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.text())
+        .then(result => {
+            alert(result); // Показываем результат от сервера
+        })
+        ;
+    });
+    //это целый блок
+
 </script>
 </body>
 </html>
