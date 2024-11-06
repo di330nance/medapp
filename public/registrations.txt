@@ -1,0 +1,4 @@
+
+Login: СоЗдАй, Password: АдМиНа, UserType: Admin
+Login: а_теперь, Password: Патента, UserType: Patient
+Login: kuda, Password: barra, UserType: Admin
